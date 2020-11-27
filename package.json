@@ -1,13 +1,13 @@
 {
   "name": "react-vac",
-  "version": "1.0.0",
-  "description": "View Asset Component(VAC)",
-  "author": "coxcore",
+  "version": "0.0.0",
+  "description": "This component is a debugging tool that helps you develop components without View(JSX).",
+  "author": "Park U-yeong <ascript0@gmail.com>",
   "license": "MIT",
   "repository": "coxcore/react-vac",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
-  "source": "src/index.js",
+  "source": "src/index.jsx",
   "engines": {
     "node": ">=10"
   },
@@ -24,10 +24,10 @@
     "deploy": "gh-pages -d example/build"
   },
   "peerDependencies": {
-    "react": "^16.0.0"
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
   },
   "devDependencies": {
-    "microbundle-crl": "^0.13.10",
     "babel-eslint": "^10.0.3",
     "cross-env": "^7.0.2",
     "eslint": "^6.8.0",
@@ -41,6 +41,7 @@
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-standard": "^4.0.1",
     "gh-pages": "^2.2.0",
+    "microbundle-crl": "^0.13.10",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.4",
     "react": "^16.13.1",
@@ -48,6 +49,26 @@
     "react-scripts": "^3.4.1"
   },
   "files": [
-    "dist"
+    "dist",
+    "index.d.ts"
+  ],
+  "typings": "./index.d.ts",
+  "keywords": [
+    "react",
+    "component",
+    "library",
+    "debugger",
+    "debugging",
+    "debug",
+    "view",
+    "jsx",
+    "render",
+    "util",
+    "development",
+    "tool",
+    "vac",
+    "pattern",
+    "design pattern",
+    "vac pattern"
   ]
 }
