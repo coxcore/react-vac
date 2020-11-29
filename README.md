@@ -2,7 +2,7 @@
 
 > This component is a debugging tool that helps you develop components without View(JSX). It provides an optimal solution for [VAC Pattern](./docs/VAC_PATTERN.md) type development.
 
-![vac pattern](./docs/assets/img/vac_pattern_s1.png?raw=true)
+![vac pattern](./docs/readme_assets/vac_pattern_s1.png?raw=true)
 
 [![NPM](https://img.shields.io/npm/v/react-vac.svg)](https://www.npmjs.com/package/react-vac) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
@@ -20,65 +20,120 @@ yarn add react-vac --dev
 
 ## Usage
 
-![basic usage](./docs/assets/img/example_vac_basic_s1.png?raw=true)
-
 ```jsx
-import React, { Component } from "react";
 import VAC from "react-vac";
 
-const Component = () => {
-  const works = () => {
-    console.log("do something");
-  };
+// props object of VAC
+const viewComponentProps = {
+  // properties
+  value: "test value",
+  someValue: { foo: "var" },
 
-  // props of component to be developed
-  const viewComponentProps = {
-    // properties
-    value: "test value",
-    someValue: { foo: "var" },
-
-    // callbacks
-    onClick: (event) => console.log("click!"),
-    onSomeEvent: (event) => works(),
-  };
-
-  // view debugging
-  return (
-    <VAC name="Dummy View" data={viewComponentProps} />
-    // <ViewComponent {...viewComponentProps} />
-  );
+  // callbacks
+  onClick: (event) => console.log("click!"),
+  onSomeEvent: (event) => console.log("onSomeEvent!"),
 };
 
-export default Component;
+// VAC Debugger
+<VAC name="Dummy View" data={viewComponentProps} />;
+
+// real VAC
+// <ViewComponent {...viewComponentProps} />
 ```
+
+![basic usage](./docs/readme_assets/example_vac_basic_s1.png?raw=true)
+
+> `VAC Debugger` analyzes `props object` and then constructs UI for debugging.
 
 [Learn More>](./docs/VAC_USAGE.md)
 
-## Examples
+## Development Process (for VAC Pattern)
 
-![basic example](./docs/assets/img/example_vac_spinbox_s1.png?raw=true)
+> VAC is View Asset Component
+
+#### Step1
+
+Create a component to develop, then define a `props object` and enter it into the `data` property of `VAC Debugger`.
 
 ```jsx
-import React, { useState } from "react";
-import VAC from "react-vac";
-
 const SpinBoxUI = () => {
-  const [value, setValue] = useState(0);
+  // props object of VAC
+  const spinBoxViewProps = {};
 
-  const spinBoxProps = {
-    // properties
-    value,
+  // VAC Debugger
+  return <VAC name="SpinBoxView" data={spinBoxViewProps} />;
 
-    // callbacks
-    onIncrease: () => setValue(value + 1),
-    onDecrease: () => setValue(value - 1),
-  };
-
-  return <VAC name="SpinBox" data={spinBoxProps} />;
+  // VAC to be developed
+  // return <SpinBoxView {...spinBoxViewProps} />;
 };
 ```
 
-[Show More>](./docs/VAC_EXAMPLES.md)
+#### Step2
+
+Develop UI functions or business logic in the component. And in the `props object`, define properties and callback functions that are needed in `VAC`.
+
+```jsx
+const SpinBoxUI = () => {
+  const [value, setValue] = useState(0);
+
+  const add = (n) => {
+    setValue(value + n);
+  };
+
+  // props object of VAC
+  const spinBoxViewProps = {
+    value,
+    onIncrease: () => add(1),
+    onDescrease: () => add(-1),
+  };
+
+  // VAC Debugger
+  return <VAC name="SpinBoxView" data="spinBoxViewProps" />;
+};
+```
+
+![basic example](./docs/readme_assets/example_vac_spinbox_s1.png?raw=true)
+
+#### Step3
+
+Develop `VAC` by checking the properties defined in the `props object`.
+
+```jsx
+const SpinBoxView = ({ value, onIncrease, onDescrease }) => (
+  <div>
+    <button onClick={onDescrease}> - </button>
+    <span>{value}</span>
+    <button onClick={onIncrease}> + </button>
+  </div>
+);
+```
+
+#### Step4
+
+Apply `VAC` to the component.
+
+```jsx
+const SpinBoxUI = () => {
+  const [value, setValue] = useState(0);
+
+  const add = (n) => {
+    setValue(value + n);
+  };
+
+  // props object of VAC
+  const spinBoxViewProps = {
+    value,
+    onIncrease: () => add(1),
+    onDescrease: () => add(-1),
+  };
+
+  // VAC
+  return <SpinBoxView {...spinBoxViewProps} />;
+
+  // VAC Debugger
+  //return <VAC name="SpinBoxView" data={spinBoxViewProps} />;
+};
+```
 
 ## License
 
