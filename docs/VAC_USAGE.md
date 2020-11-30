@@ -10,6 +10,9 @@
   - [useValue, useDefaultValue](#usevalue-usedefaultvalue)
   - [on~ (Property prefixed with `on`)](#on-property-prefixed-with-on)
   - [customEvent](#customevent)
+- [Components](#components)
+  - [VACList](#vaclist)
+  - [VACInput](#vacinput)
 
 ## Props
 
@@ -337,3 +340,52 @@ How is it different from event?
 ```
 
 > When developing `VAC`, it is not recommended to use `customEvent` to avoid being dependent on certain function. This is because the parent component of `VAC` uses the `customEvent` to define functions inside the `VAC`.
+
+## Components
+
+### VACList
+
+List preset.
+
+- `useList` : "list"
+- `useEach` : "each"
+
+```jsx
+import VAC, { VACList } from "react-vac";
+
+<VAC useList="list" useEach="each" />
+// same
+<VACList />
+```
+
+### VACInput
+
+Input preset.
+
+- `useValue` : "value"
+- `useDefaultValue` : "defaultValue"
+- `onChange` : "onChange"
+- `onFocus` : "onFocus"
+- `onBlur` : "onBlur"
+- `onSelect` : "onSelect"
+- `onKeyDown` : "onKeyDown"
+- `onKeyUp` : "onKeyUp"
+- `onKeyPress` : "onKeyPress"
+
+```jsx
+import VAC, { VACInput } from "react-vac";
+
+<VAC
+  useValue="value"
+  useDefaultValue="defaultValue"
+  onChange="onChange"
+  onFocus="onFocus"
+  onBlur="onBlur"
+  onSelect="onSelect"
+  onKeyDown="onKeyDown"
+  onKeyUp="onKeyUp"
+  onKeyPress="onKeyPress"
+/>
+// same
+<VACInput />
+```
