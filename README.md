@@ -1,6 +1,6 @@
 # react-vac (prototype)
 
-> This component is a debugging tool that helps you develop components without View(JSX). It provides an optimal solution for [VAC Pattern](./docs/VAC_PATTERN.md) type development.
+> This component is a debugging tool that helps you develop components without View(JSX). It provides an optimal solution for [VAC Pattern](#development-process-for-view-asset-component) development.
 
 ![vac pattern](./docs/readme_assets/vac_pattern_s1.png?raw=true)
 
@@ -47,9 +47,7 @@ const viewComponentProps = {
 
 [Learn More>](./docs/VAC_USAGE.md)
 
-## Development Process (for VAC Pattern)
-
-> VAC is View Asset Component
+## Development Process (for View Asset Component)
 
 #### Step1
 
