@@ -120,9 +120,10 @@ const View = ({
     const validDefaultValue =
         defaultValueType === 'string' || defaultValueType === 'number';
     const validOnChange = callbackNames.onChange;
-    const validInput = validOnChange;
+    const validInput = validOnChange || validDefaultValue;
+    const hasInputEvent = Object.keys(callbacksMap).length > 0;
 
-    const showTextarea = validValue || validOnChange || validDefaultValue;
+    const showTextarea = validValue || validDefaultValue || hasInputEvent;
     const showEvents = callbacks && callbacks.length > 0;
     const showJson = json !== '{}';
 
@@ -184,8 +185,10 @@ const genCallbacks = (events, props) => {
         const isFnc = type === 'function';
         const callback = isFnc ? fnc : props[fnc];
 
-        isString && (callbackNames[fnc] = true);
-        eventProps[event] = callback;
+        if (typeof callback === 'function') {
+            isString && (callbackNames[fnc] = true);
+            eventProps[event] = callback;
+        }
     });
 
     return [eventProps, callbackNames];
