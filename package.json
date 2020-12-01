@@ -1,6 +1,6 @@
 {
   "name": "react-vac",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "This component is a debugging tool that helps you develop components without View(JSX).",
   "author": "Park U-yeong <ascript0@gmail.com>",
   "license": "MIT",

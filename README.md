@@ -2,7 +2,7 @@
 
 > This component is a debugging tool that helps you develop components without View(JSX). It provides an optimal solution for [VAC Pattern](#development-process-for-view-asset-component) development.
 
-![vac pattern](./docs/readme_assets/vac_pattern_s1.png?raw=true)
+![vac pattern](https://raw.githubusercontent.com/coxcore/react-vac/HEAD/docs/readme_assets/vac_pattern_s1.png?raw=true)
 
 [![NPM](https://img.shields.io/npm/v/react-vac.svg)](https://www.npmjs.com/package/react-vac) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
@@ -43,9 +43,9 @@ const viewComponentProps = {
 // <ViewComponent {...viewComponentProps} />
 ```
 
-![basic usage](./docs/readme_assets/example_vac_basic_s1.png?raw=true)
+![basic usage](https://raw.githubusercontent.com/coxcore/react-vac/HEAD/docs/readme_assets/example_vac_basic_s1.png?raw=true)
 
-[Learn More>](./docs/VAC_USAGE.md)
+[Learn More>](https://github.com/coxcore/react-vac/blob/main/docs/VAC_USAGE.md)
 
 ## Development Process (for View Asset Component)
 
@@ -98,7 +98,7 @@ const SpinBoxUI = () => {
 };
 ```
 
-![basic example](./docs/readme_assets/example_vac_spinbox_s1.png?raw=true)
+![basic example](https://raw.githubusercontent.com/coxcore/react-vac/HEAD/docs/readme_assets/example_vac_spinbox_s1.png?raw=true)
 
 #### Step3
 
