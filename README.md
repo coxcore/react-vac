@@ -20,7 +20,7 @@ yarn add react-vac --dev
 
 ## Usage
 
-`VAC Debugger` analyzes `props object` and then constructs UI for debugging.
+`VAC Debugger` analyzes `Props Object` and then constructs UI for debugging.
 
 ```jsx
 import VAC from "react-vac";
@@ -54,12 +54,12 @@ View Asset Component(`VAC`) is a rendering component to manage JSX and Style, an
 #### VAC Features
 
 - It only performs processes related to rendering, such as iterative creation, conditional exposure, and style control.
-- It is a stateless component that does not change its view by itself. Only controlled by props of component.
+- It is a stateless component that does not change its View by itself. Only controlled by props of component.
 - It does not do any additional processing when binding the callback function to the component's element event.
 
 #### Step1
 
-Create a component to develop, then define a `props object` and enter it into the `data` property of `VAC Debugger`.
+Create a component to develop, then define a `Props Object` and enter it into the `data` property of `VAC Debugger`.
 
 ```jsx
 const SpinBoxUI = () => {
@@ -76,7 +76,7 @@ const SpinBoxUI = () => {
 
 #### Step2
 
-Develop UI functions or business logic in the component. And in the `props object`, define properties and callback functions that are needed in `VAC`.
+Develop UI functions or business logic in the component. And in the `Props Object`, define properties and callback functions that are needed in `VAC`.
 
 ```jsx
 const SpinBoxUI = () => {
@@ -94,7 +94,7 @@ const SpinBoxUI = () => {
   };
 
   // VAC Debugger
-  return <VAC name="SpinBoxView" data="spinBoxViewProps" />;
+  return <VAC name="SpinBoxView" data={spinBoxViewProps} />;
 };
 ```
 
@@ -102,7 +102,7 @@ const SpinBoxUI = () => {
 
 #### Step3
 
-Develop `VAC` by checking the properties defined in the `props object`.
+Develop `VAC` by checking the properties defined in the `Props Object`.
 
 ```jsx
 const SpinBoxView = ({ value, onIncrease, onDescrease }) => (
