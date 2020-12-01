@@ -212,6 +212,8 @@ Property name of callback function that returns new props for each list item by 
 
 ![props_list4_s1](./assets/img/props_vac_list4_s1.png?raw=true)
 
+> `VAC Debugger` assumes `VAC` creates props of each item component in list using the callback specified in `useEach`. Use [`react-loop-item`](https://www.npmjs.com/package/react-loop-item#each-optional) to help develop this feature in `VAC`.
+
 ### useValue, useDefaultValue
 
 > [type] string
