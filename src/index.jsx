@@ -342,7 +342,7 @@ const style = {
     },
     json: {
         display: 'block',
-        padding: `7px 10px 5px`,
+        padding: `6px 10px`,
         margin: '0 0 2px',
         color: JSON_COLOR,
         backgroundColor: JSON_BG_COLOR,
