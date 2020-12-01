@@ -40,7 +40,7 @@ If `VAC Debugger` has other properties and `name` is omitted, `name area` is not
 
 > [type] any
 
-`props object` of component.
+`Props Object` of component.
 
 ```jsx
 <VAC name="Props: data" data={{ value: "test value" }} />
@@ -48,7 +48,7 @@ If `VAC Debugger` has other properties and `name` is omitted, `name area` is not
 
 ![props_data1_s1](./assets/img/props_vac_data1_s1.png?raw=true)
 
-If `props` has callback functions, each button that calls the callback function is created.
+If props has callback functions, each button that calls the callback function is created.
 
 ```jsx
 <VAC
@@ -218,7 +218,7 @@ Property name of callback function that returns new props for each list item by 
 
 > [type] string
 
-Property name to be used for `value` and `defaultValue` of textarea element. If `useValue` or `useDefaultValue` is used, `textarea` is exposed.
+Property name to be used for `value` and `defaultValue` of textarea element. If target of `useValue` or `useDefaultValue` is valid, `textarea` is exposed.
 
 ```jsx
 <VAC
@@ -284,8 +284,9 @@ const InputUI = () => {
 
 > [type] string
 
-Property name to be used for event callback function of textarea.
-Therefore, the property name must be valid as `textarea` props.
+Property name to be used for event callback function of textarea. Therefore, the property name must be valid as `textarea` props.
+
+If target of the props is valid, `textarea` is exposed.
 
 ```jsx
 <VAC
