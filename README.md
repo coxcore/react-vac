@@ -2,7 +2,7 @@
 
 > This component is a debugging tool that helps you develop components without View(JSX). It provides an optimal solution for [VAC Pattern](#development-process-for-view-asset-component) development.
 
-![vac pattern](https://raw.githubusercontent.com/coxcore/react-vac/HEAD/docs/readme_assets/vac_pattern_s1.png?raw=true)
+![vac pattern](./docs/readme_assets/vac_pattern_s1.png?raw=true)
 
 [![NPM](https://img.shields.io/npm/v/react-vac.svg)](https://www.npmjs.com/package/react-vac) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
@@ -21,6 +21,8 @@ yarn add react-vac --dev
 ## Usage
 
 `VAC Debugger` analyzes `Props Object` and then constructs UI for debugging.
+
+![basic usage](./docs/readme_assets/example_vac_basic_s1.png?raw=true)
 
 ```jsx
 import VAC from "react-vac";
@@ -43,9 +45,9 @@ const viewComponentProps = {
 // <ViewComponent {...viewComponentProps} />
 ```
 
-![basic usage](https://raw.githubusercontent.com/coxcore/react-vac/HEAD/docs/readme_assets/example_vac_basic_s1.png?raw=true)
-
-[Learn More>](https://github.com/coxcore/react-vac/blob/main/docs/VAC_USAGE.md)
+> `VAC Debugger` also has functions related to input and list.
+>
+> [Learn More >](./docs/VAC_USAGE.md)
 
 ## Development Process (for View Asset Component)
 
@@ -90,7 +92,7 @@ const SpinBoxUI = () => {
   const spinBoxViewProps = {
     value,
     onIncrease: () => add(1),
-    onDescrease: () => add(-1),
+    onDecrease: () => add(-1),
   };
 
   // VAC Debugger
@@ -98,16 +100,16 @@ const SpinBoxUI = () => {
 };
 ```
 
-![basic example](https://raw.githubusercontent.com/coxcore/react-vac/HEAD/docs/readme_assets/example_vac_spinbox_s1.png?raw=true)
+![basic example](./docs/readme_assets/example_vac_spinbox_s1.png?raw=true)
 
 #### Step3
 
 Develop `VAC` by checking the properties defined in the `Props Object`.
 
 ```jsx
-const SpinBoxView = ({ value, onIncrease, onDescrease }) => (
+const SpinBoxView = ({ value, onIncrease, onDecrease }) => (
   <div>
-    <button onClick={onDescrease}> - </button>
+    <button onClick={onDecrease}> - </button>
     <span>{value}</span>
     <button onClick={onIncrease}> + </button>
   </div>
@@ -130,7 +132,7 @@ const SpinBoxUI = () => {
   const spinBoxViewProps = {
     value,
     onIncrease: () => add(1),
-    onDescrease: () => add(-1),
+    onDecrease: () => add(-1),
   };
 
   // VAC
