@@ -3,6 +3,8 @@ import React from 'react';
 export interface VACProps {
   name?: string,
   data?: any,
+  trace?: string,
+  listTrace?: string,
   customEvent?: { [key: string]: Function },
   hidden?: boolean,
   maxWidth?: number | string,

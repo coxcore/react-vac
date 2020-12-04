@@ -5,6 +5,8 @@ import React from 'react';
 const VAC = ({
     name,
     data,
+    trace = null,
+    listTrace = null,
     customEvent = EMPTY_DATA,
     hidden = false,
     maxWidth = null,
@@ -41,6 +43,7 @@ const VAC = ({
     const viewName = `${validName ? name : ''}${lengthInfo}`;
     const viewData = validData ? propsData : data;
     const viewPrefix = validList ? 'List Props' : validData ? 'Props' : 'Log';
+    const viewTrace = getTraceList(trace);
 
     const validViewName = Boolean(viewName);
 
@@ -60,7 +63,9 @@ const VAC = ({
 
     const useLine = (validName && !validList) || (validList && validViewName);
 
-    const eachView = getEachView(propEach, validName);
+    const eachView = validList
+        ? getEachView(propEach, getTraceList(listTrace))
+        : null;
 
     return (
         <div style={viewContainerStyle}>
@@ -68,6 +73,7 @@ const VAC = ({
             <div style={viewScrollStyle}>
                 <View
                     data={viewData}
+                    trace={viewTrace}
                     customEvent={customEvent}
                     prefix={viewPrefix}
                     useLine={useLine}
@@ -84,6 +90,7 @@ const VAC = ({
 
 const View = ({
     data,
+    trace,
     value,
     defaultValue,
     prefix = '',
@@ -95,7 +102,8 @@ const View = ({
     const dataType = typeof data;
     const validData = data !== null && dataType === 'object';
 
-    const json = JSON.stringify(data) || (data === '' ? '' : String(data));
+    const jsonData = validData ? jsonFilter(data, trace) : data;
+    const json = JSON.stringify(jsonData) || (data === '' ? '' : String(data));
 
     const checkCallback = ([name, callback]) =>
         typeof callback === 'function' && !callbackNames[name];
@@ -169,8 +177,9 @@ const eachBtn = ([label, onClick]) => ({
     onClick,
 });
 
-const getEachView = (each) => (itemData, index) => ({
+const getEachView = (each, trace) => (itemData, index) => ({
     data: each(itemData, index),
+    trace,
     prefix: index,
     useLine: true,
 });
@@ -196,8 +205,26 @@ const genCallbacks = (events, props) => {
 
 const emptyList = <View data={'EMPTY LIST'} useLine />;
 
+const getTraceList = (trace) =>
+    trace && typeof trace === 'string'
+        ? trace.trim().split(REG_SPLIT)
+        : EMPTY_ARRAY;
+
+const jsonFilter = (data, trace) => {
+    if (!trace || !trace.length) {
+        return data;
+    }
+
+    return trace.reduce((targetProps, key) => {
+        targetProps[key] = data[key];
+        return targetProps;
+    }, {});
+};
+
 const EMPTY_DATA = {};
+const EMPTY_ARRAY = [];
 const EMPTY_FNC = (data) => data;
+const REG_SPLIT = /[\s,]+/;
 const INPUT_EVENTS = `
 onKeyDown
 onKeyUp
@@ -208,7 +235,7 @@ onBlur
 onSelect
 `
     .trim()
-    .split(/\s/)
+    .split(REG_SPLIT)
     .reduce((events, event) => {
         events[event] = event;
         return events;
