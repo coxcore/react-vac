@@ -4,6 +4,8 @@
   - [name](#name)
   - [data](#data)
   - [hidden](#hidden)
+  - [trace](#trace)
+  - [listTrace](#listTrace)
   - [maxWidth, maxHeight](#maxwidth-maxheight)
   - [useList](#uselist)
   - [useEach](#useeach)
@@ -15,6 +17,12 @@
   - [VACInput](#vacinput)
 
 ## Props
+
+Prop names follow the rules below.
+
+- `use~`: Props to use for list elements or input elements in `VAC`
+- `on~`: Event callback to use for input elements in `VAC`
+- etc: Props for `VAC`
 
 ### name
 
@@ -91,10 +99,55 @@ If the type of `data` is not object, it is output to log.
 Prevent rendering.
 
 ```jsx
-<VAC name="Props: data" data={'string'} hidden />
+<VAC name="Props: hidden" data={'string'} hidden />
 // or
-<VAC name="Props: data" data={'string'} hidden={true} />
+<VAC name="Props: hidden" data={'string'} hidden={true} />
 ```
+
+### trace
+
+> [type] string, [version] ^0.1.0
+
+props to show in `props area`. If there is more than one prop, separate them with commas or spaces.
+
+```jsx
+<VAC
+  name="Props: trace"
+  trace="propA, propC"
+  data={{ propA: "test value", propB: 12345, propC: true }}
+/>
+```
+
+![props_trace1_s1](./assets/img/props_vac_trace1_s1.png?raw=true)
+
+### listTrace
+
+> [type] string, [version] ^0.1.0
+
+item props of list to show in `list area`. If there is more than one prop, separate them with commas or spaces.
+
+```jsx
+<VAC
+  name="Props: listTrace"
+  useList="list"
+  trace="propB"
+  listTrace="propA, propC"
+  data={{
+    // list props
+    propA: "test value",
+    propB: 12345,
+    propC: true,
+    // list item props
+    list: [
+      { propA: "test value", propB: 12345, propC: true },
+      { propA: "test value", propB: 12345, propC: true },
+      { propA: "test value", propB: 12345, propC: true },
+    ],
+  }}
+/>
+```
+
+![props_trace1_s1](./assets/img/props_vac_trace2_s1.png?raw=true)
 
 ### maxWidth, maxHeight
 
@@ -104,9 +157,9 @@ Set max width and max height.
 If height is larger than max height, scrolling is activated.
 
 ```jsx
-<VAC name="Props: data" data={'string'} maxWidth="100" />
+<VAC name="Props: maxWidth" data={'string'} maxWidth="100" />
 // or
-<VAC name="Props: data" data={'string'} maxHeight={100} />
+<VAC name="Props: maxHeight" data={'string'} maxHeight={100} />
 ```
 
 ### useList
@@ -117,7 +170,7 @@ Property name of array to be displayed as `list area`. If `useList` is used, the
 
 ```jsx
 <VAC
-  name="Props: list"
+  name="Props: List"
   useList="exampleList"
   data={{
     exampleList: [
@@ -150,7 +203,7 @@ Props other than the property used in the `useList` are displayed in `props area
 
 ```jsx
 <VAC
-  name="Props: list"
+  name="Props: List"
   useList="exampleList"
   data={{
     // list component props
@@ -185,7 +238,7 @@ Property name of callback function that returns new props for each list item by 
 
 ```jsx
 <VAC
-  name="Props: list"
+  name="Props: List"
   useList="exampleList"
   useEach="exampleEach"
   data={{
@@ -212,7 +265,30 @@ Property name of callback function that returns new props for each list item by 
 
 ![props_list4_s1](./assets/img/props_vac_list4_s1.png?raw=true)
 
-> `VAC Debugger` assumes `VAC` creates props of each item component in list using the callback specified in `useEach`. Use [`react-loop-item`](https://www.npmjs.com/package/react-loop-item#each-optional) to help develop this feature in `VAC`.
+`VAC Debugger` assumes `VAC` creates props of each item component in list using the callback specified in `useEach`.
+So the relevant processing must be implemented in `VAC`.
+
+```jsx
+// VAC
+const ViewComponent = ({ list, each }) => (
+  <ul>
+    {list &&
+      list.length > 0 &&
+      list.map((item) => {
+        // Convert {value} to {label, onClick} using `each`
+        const { label, onClick } = each(item);
+
+        return (
+          <li>
+            <button onClick={onClick}>{label}</button>
+          </li>
+        );
+      })}
+  </ul>
+);
+```
+
+> Use [`react-loop-item`](https://www.npmjs.com/package/react-loop-item#each-optional) to help develop this feature in `VAC`.
 
 ### useValue, useDefaultValue
 

@@ -22,6 +22,8 @@ yarn add react-vac --dev
 
 `VAC Debugger` analyzes `Props Object` and then constructs UI for debugging.
 
+![basic usage](./docs/readme_assets/example_vac_basic_s1.png?raw=true)
+
 ```jsx
 import VAC from "react-vac";
 
@@ -43,9 +45,9 @@ const viewComponentProps = {
 // <ViewComponent {...viewComponentProps} />
 ```
 
-![basic usage](./docs/readme_assets/example_vac_basic_s1.png?raw=true)
-
-[Learn More>](./docs/VAC_USAGE.md)
+> `VAC Debugger` also has functions related to input and list.
+>
+> [Learn More >](./docs/VAC_USAGE.md)
 
 ## Development Process (for View Asset Component)
 
@@ -90,7 +92,7 @@ const SpinBoxUI = () => {
   const spinBoxViewProps = {
     value,
     onIncrease: () => add(1),
-    onDescrease: () => add(-1),
+    onDecrease: () => add(-1),
   };
 
   // VAC Debugger
@@ -105,9 +107,9 @@ const SpinBoxUI = () => {
 Develop `VAC` by checking the properties defined in the `Props Object`.
 
 ```jsx
-const SpinBoxView = ({ value, onIncrease, onDescrease }) => (
+const SpinBoxView = ({ value, onIncrease, onDecrease }) => (
   <div>
-    <button onClick={onDescrease}> - </button>
+    <button onClick={onDecrease}> - </button>
     <span>{value}</span>
     <button onClick={onIncrease}> + </button>
   </div>
@@ -130,7 +132,7 @@ const SpinBoxUI = () => {
   const spinBoxViewProps = {
     value,
     onIncrease: () => add(1),
-    onDescrease: () => add(-1),
+    onDecrease: () => add(-1),
   };
 
   // VAC

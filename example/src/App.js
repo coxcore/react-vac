@@ -73,7 +73,6 @@ const Input = () => {
 
         onChange: (event) => {
             const value = event.currentTarget.value;
-            console.log(value);
             setValue(value);
         },
         onSubmit: (event) => console.log('submit :', value),
@@ -278,6 +277,30 @@ const App = () => {
                     value: 1,
                     increase: (result) => console.log(result),
                     onDecrease: (event) => console.log('decrease!'),
+                }}
+            />
+
+            <VAC
+                name="Props: trace"
+                data={{ propA: 'test value', propB: 12345, propC: true }}
+                trace="propA, propC"
+            />
+            <VAC
+                name="Props: listTrace"
+                useList="list"
+                trace="propB"
+                listTrace="propA, propC"
+                data={{
+                    // list props
+                    propA: 'test value',
+                    propB: 12345,
+                    propC: true,
+                    // list item props
+                    list: [
+                        { propA: 'test value', propB: 12345, propC: true },
+                        { propA: 'test value', propB: 12345, propC: true },
+                        { propA: 'test value', propB: 12345, propC: true },
+                    ],
                 }}
             />
 
