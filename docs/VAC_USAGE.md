@@ -4,6 +4,8 @@
   - [name](#name)
   - [data](#data)
   - [hidden](#hidden)
+  - [trace](#trace)
+  - [listTrace](#listTrace)
   - [maxWidth, maxHeight](#maxwidth-maxheight)
   - [useList](#uselist)
   - [useEach](#useeach)
@@ -95,6 +97,51 @@ Prevent rendering.
 // or
 <VAC name="Props: data" data={'string'} hidden={true} />
 ```
+
+### trace
+
+> [type] string, [version] ^0.1.0
+
+props to show in `props area`. If there is more than one prop, separate them with commas or spaces.
+
+```jsx
+<VAC
+  name="Props: trace"
+  trace="propA, propC"
+  data={{ propA: "test value", propB: 12345, propC: true }}
+/>
+```
+
+![props_trace1_s1](./assets/img/props_vac_trace1_s1.png?raw=true)
+
+### listTrace
+
+> [type] string, [version] ^0.1.0
+
+item props of list to show in `list area`. If there is more than one prop, separate them with commas or spaces.
+
+```jsx
+<VAC
+  name="Props: listTrace"
+  useList="list"
+  trace="propB"
+  listTrace="propA, propC"
+  data={{
+    // list props
+    propA: "test value",
+    propB: 12345,
+    propC: true,
+    // list item props
+    list: [
+      { propA: "test value", propB: 12345, propC: true },
+      { propA: "test value", propB: 12345, propC: true },
+      { propA: "test value", propB: 12345, propC: true },
+    ],
+  }}
+/>
+```
+
+![props_trace1_s1](./assets/img/props_vac_trace2_s1.png?raw=true)
 
 ### maxWidth, maxHeight
 
