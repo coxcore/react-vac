@@ -21,7 +21,7 @@ const VAC = ({
         return null;
     }
 
-    const dataIsArray = data instanceof Array;
+    const dataIsArray = Array.isArray(data);
     const validData = typeof data === 'object' && !dataIsArray && data !== null;
 
     const {
@@ -32,17 +32,21 @@ const VAC = ({
         ...propsData
     } = validData ? data : EMPTY_DATA;
 
+    const targetList = dataIsArray ? data : propList;
+
     const [callbacksMap, callbackNames] = genCallbacks(modeEvents, propsData);
 
-    const validList = propList instanceof Array;
+    const validList = Array.isArray(targetList);
 
-    const lengthInfo = validList ? ` (length : ${propList.length})` : '';
+    const lengthInfo =
+        !dataIsArray && validList ? ` (length : ${targetList.length})` : '';
 
     const validName = typeof name === 'string' && name !== '';
 
     const viewName = `${validName ? name : ''}${lengthInfo}`;
     const viewData = validData ? propsData : data;
-    const viewPrefix = validList ? 'List Props' : validData ? 'Props' : 'Log';
+    const viewPrefix =
+        !dataIsArray && validList ? 'List Props' : validData ? 'Props' : 'Log';
     const viewTrace = getTraceList(trace);
 
     const validViewName = Boolean(viewName);
@@ -69,7 +73,14 @@ const VAC = ({
 
     return (
         <div style={viewContainerStyle}>
-            {validViewName && <h5 style={style.title}>{viewName}</h5>}
+            {validViewName && (
+                <h5
+                    style={style.title}
+                    dangerouslySetInnerHTML={{
+                        __html: viewName,
+                    }}
+                />
+            )}
             <div style={viewScrollStyle}>
                 <View
                     data={viewData}
@@ -82,7 +93,7 @@ const VAC = ({
                     callbacksMap={callbacksMap}
                     callbackNames={callbackNames}
                 />
-                {loop(View, propList, eachView, emptyList, !validList)}
+                {loop(View, targetList, eachView, emptyList, !validList)}
             </div>
         </div>
     );
@@ -103,7 +114,9 @@ const View = ({
     const validData = data !== null && dataType === 'object';
 
     const jsonData = validData ? jsonFilter(data, trace) : data;
-    const json = JSON.stringify(jsonData) || (data === '' ? '' : String(data));
+    const json = beautifyJson(
+        JSON.stringify(jsonData) || (data === '' ? '' : String(data))
+    );
 
     const checkCallback = ([name, callback]) =>
         typeof callback === 'function' && !callbackNames[name];
@@ -138,7 +151,7 @@ const View = ({
     const hasContents = showTextarea || showEvents || showJson;
     const showLine = useLine && hasContents;
 
-    const viewPrefix = prefix !== '' && `[${prefix}]: `;
+    const viewPrefix = prefix !== '' ? `[${prefix}]: ` : '';
 
     return (
         <div style={style.ui}>
@@ -157,20 +170,41 @@ const View = ({
                 <p style={style.buttons}>{loop(Btn, callbacks, eachBtn)}</p>
             )}
             {showJson && (
-                <p style={style.json}>
-                    {viewPrefix}
-                    {json}
-                </p>
+                <p
+                    style={style.json}
+                    dangerouslySetInnerHTML={{
+                        __html: `${viewPrefix}${json}`,
+                    }}
+                    role="button"
+                    onClick={() =>
+                        console &&
+                        typeof console.log === 'function' &&
+                        console.log(jsonData)
+                    }
+                />
             )}
         </div>
     );
 };
 
 const Btn = ({ label, onClick }) => (
-    <button style={style.button} onClick={onClick}>
+    <button
+        style={style.button}
+        onClick={onClick}
+        onMouseDown={onActiveBtn}
+        onTouchStart={onActiveBtn}
+        onMouseUp={onInactiveBtn}
+        onTouchEnd={onInactiveBtn}
+    >
         {label}
     </button>
 );
+
+const onActiveBtn = (event) =>
+    (event.target.style.backgroundColor = BTN_ACTIVE);
+
+const onInactiveBtn = (event) =>
+    (event.target.style.backgroundColor = BTN_BG_COLOR);
 
 const eachBtn = ([label, onClick]) => ({
     label,
@@ -221,9 +255,36 @@ const jsonFilter = (data, trace) => {
     }, {});
 };
 
+const beautifyJson = (json) =>
+    stripTag(json)
+        .replace(REG_KEY, callbackKey)
+        .replace(REG_VALUE, callbackValue)
+        .replace(REG_ARRAY, callbackValue);
+
+const stripTag = (str) =>
+    str
+        .replace(REG_QUOAT, '&quot;')
+        .replace(REG_LT, '&lt;')
+        .replace(REG_GT, '&gt;');
+
+const callbackKey = (str, before, key, after) => {
+    return `${before}<span style="color:#9bdeb5;">${key}</span>${after}`;
+};
+
+const callbackValue = (str, before, value) => {
+    const color = value.charAt(0) === '"' ? '#ffb061' : '#b598d6';
+    return `${before}<span style="color:${color};">${value}</span>`;
+};
+
 const EMPTY_DATA = {};
 const EMPTY_ARRAY = [];
 const EMPTY_FNC = (data) => data;
+const REG_QUOAT = /\\"/g;
+const REG_LT = /</g;
+const REG_GT = />/g;
+const REG_KEY = /([{,]\s*)("[^"]+")(\s*:)/g;
+const REG_VALUE = /(<\/span>\s*:\s*)("[^"]*"|[^{[,}]*)/g;
+const REG_ARRAY = /([[,])("[^"]*"|[^",]+)(?=[,\]])/g;
 const REG_SPLIT = /[\s,]+/;
 const INPUT_EVENTS = `
 onKeyDown
@@ -241,19 +302,6 @@ onSelect
         return events;
     }, {});
 
-export const VACList = (props) => (
-    <VAC useList="list" useEach="each" {...props} />
-);
-
-export const VACInput = (props) => (
-    <VAC
-        useValue="value"
-        useDefaultValue="defaultValue"
-        {...INPUT_EVENTS}
-        {...props}
-    />
-);
-
 const loop = (
     Item,
     list = null,
@@ -265,7 +313,7 @@ const loop = (
         return null;
     }
 
-    const datas = list instanceof Array ? list : null;
+    const datas = Array.isArray(list) ? list : null;
 
     return Item && datas && datas.length > 0
         ? datas.map((data, index) => {
@@ -276,11 +324,13 @@ const loop = (
 };
 
 // dummy styles
-const TITLE_COLOR = '#fffdba';
-const BORDER_COLOR = '#354f63';
+const TITLE_COLOR = '#ede080';
+const BORDER_COLOR = '#00111f';
+const LINE_COLOR = '#354f63';
 const BG_COLOR = '#0c2233';
 const BTN_BG_COLOR = '#4ebded';
-const JSON_COLOR = '#ffc478';
+const BTN_ACTIVE = '#0074a6';
+const JSON_COLOR = '#aaa';
 const JSON_BG_COLOR = '#05070d';
 const FONT_SIZE = 14;
 
@@ -305,6 +355,7 @@ const style = {
         margin: '-3px 0',
         fontFamily: 'initial',
         fontSize: `${FONT_SIZE + 3}px`,
+        textAlign: 'left',
         color: TITLE_COLOR,
     },
     scroll: {
@@ -326,7 +377,7 @@ const style = {
         width: '99%',
         height: '1px',
         border: 'none',
-        backgroundColor: BORDER_COLOR,
+        backgroundColor: LINE_COLOR,
     },
     textarea: {
         display: 'block',
@@ -335,7 +386,7 @@ const style = {
         width: '99.3%',
         boxSizing: 'border-box',
         borderRadius: '4px',
-        border: `1px solid ${BORDER_COLOR}`,
+        border: `1px solid ${LINE_COLOR}`,
         outline: 'none',
         color: '#444',
         backgroundColor: '#eee',
@@ -379,7 +430,33 @@ const style = {
         borderRadius: '6px',
         textAlign: 'left',
         wordBreak: 'break-all',
+        cursor: 'pointer',
     },
 };
 
-export default VAC;
+const withPreset = (presetName, presetProps) => {
+    const namePrefix = presetName
+        ? `<span style="color:#ff745c;">${presetName}</span>`
+        : '';
+    return (props) =>
+        VAC({
+            ...presetProps,
+            ...props,
+            name: `${namePrefix}${
+                namePrefix && props.name ? ' | ' : ''
+            }${stripTag(props.name)}`,
+        });
+};
+
+const VACList = withPreset('@List', {
+    useList: 'list',
+    useEach: 'each',
+});
+
+const VACInput = withPreset('@Input', {
+    useValue: 'value',
+    useDefaultValue: 'defaultValue',
+    ...INPUT_EVENTS,
+});
+
+export { withPreset, VAC, VACList, VACInput, VAC as default };
