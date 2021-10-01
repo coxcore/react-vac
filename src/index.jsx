@@ -21,7 +21,7 @@ const VAC = ({
         return null;
     }
 
-    const dataIsArray = data instanceof Array;
+    const dataIsArray = Array.isArray(data);
     const validData = typeof data === 'object' && !dataIsArray && data !== null;
 
     const {
@@ -32,17 +32,21 @@ const VAC = ({
         ...propsData
     } = validData ? data : EMPTY_DATA;
 
+    const targetList = dataIsArray ? data : propList;
+
     const [callbacksMap, callbackNames] = genCallbacks(modeEvents, propsData);
 
-    const validList = propList instanceof Array;
+    const validList = Array.isArray(targetList);
 
-    const lengthInfo = validList ? ` (length : ${propList.length})` : '';
+    const lengthInfo =
+        !dataIsArray && validList ? ` (length : ${targetList.length})` : '';
 
     const validName = typeof name === 'string' && name !== '';
 
     const viewName = `${validName ? name : ''}${lengthInfo}`;
     const viewData = validData ? propsData : data;
-    const viewPrefix = validList ? 'List Props' : validData ? 'Props' : 'Log';
+    const viewPrefix =
+        !dataIsArray && validList ? 'List Props' : validData ? 'Props' : 'Log';
     const viewTrace = getTraceList(trace);
 
     const validViewName = Boolean(viewName);
@@ -82,7 +86,7 @@ const VAC = ({
                     callbacksMap={callbacksMap}
                     callbackNames={callbackNames}
                 />
-                {loop(View, propList, eachView, emptyList, !validList)}
+                {loop(View, targetList, eachView, emptyList, !validList)}
             </div>
         </div>
     );
@@ -265,7 +269,7 @@ const loop = (
         return null;
     }
 
-    const datas = list instanceof Array ? list : null;
+    const datas = Array.isArray(list) ? list : null;
 
     return Item && datas && datas.length > 0
         ? datas.map((data, index) => {
