@@ -175,6 +175,12 @@ const View = ({
                     dangerouslySetInnerHTML={{
                         __html: `${viewPrefix}${json}`,
                     }}
+                    role="button"
+                    onClick={() =>
+                        console &&
+                        typeof console.log === 'function' &&
+                        console.log(jsonData)
+                    }
                 />
             )}
         </div>
@@ -424,6 +430,7 @@ const style = {
         borderRadius: '6px',
         textAlign: 'left',
         wordBreak: 'break-all',
+        cursor: 'pointer',
     },
 };
 
