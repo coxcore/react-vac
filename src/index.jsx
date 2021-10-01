@@ -252,7 +252,8 @@ const jsonFilter = (data, trace) => {
 const beautifyJson = (json) =>
     stripTag(json)
         .replace(REG_KEY, callbackKey)
-        .replace(REG_VALUE, callbackValue);
+        .replace(REG_VALUE, callbackValue)
+        .replace(REG_ARRAY, callbackValue);
 
 const stripTag = (str) =>
     str
@@ -276,7 +277,8 @@ const REG_QUOAT = /\\"/g;
 const REG_LT = /</g;
 const REG_GT = />/g;
 const REG_KEY = /([{,]\s*)("[^"]+")(\s*:)/g;
-const REG_VALUE = /(<\/span>\s*:\s*)((?:"[^"]*")|(?:[^{[,}]*))/g;
+const REG_VALUE = /(<\/span>\s*:\s*)("[^"]*"|[^{[,}]*)/g;
+const REG_ARRAY = /([[,])("[^"]*"|[^",]+)(?=[,\]])/g;
 const REG_SPLIT = /[\s,]+/;
 const INPUT_EVENTS = `
 onKeyDown
