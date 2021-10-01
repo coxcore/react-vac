@@ -171,10 +171,23 @@ const View = ({
 };
 
 const Btn = ({ label, onClick }) => (
-    <button style={style.button} onClick={onClick}>
+    <button
+        style={style.button}
+        onClick={onClick}
+        onMouseDown={onActiveBtn}
+        onTouchStart={onActiveBtn}
+        onMouseUp={onInactiveBtn}
+        onTouchEnd={onInactiveBtn}
+    >
         {label}
     </button>
 );
+
+const onActiveBtn = (event) =>
+    (event.target.style.backgroundColor = BTN_ACTIVE);
+
+const onInactiveBtn = (event) =>
+    (event.target.style.backgroundColor = BTN_BG_COLOR);
 
 const eachBtn = ([label, onClick]) => ({
     label,
@@ -284,6 +297,7 @@ const TITLE_COLOR = '#fffdba';
 const BORDER_COLOR = '#354f63';
 const BG_COLOR = '#0c2233';
 const BTN_BG_COLOR = '#4ebded';
+const BTN_ACTIVE = '#0074a6';
 const JSON_COLOR = '#ffc478';
 const JSON_BG_COLOR = '#05070d';
 const FONT_SIZE = 14;
