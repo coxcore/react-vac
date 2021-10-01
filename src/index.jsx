@@ -73,7 +73,14 @@ const VAC = ({
 
     return (
         <div style={viewContainerStyle}>
-            {validViewName && <h5 style={style.title}>{viewName}</h5>}
+            {validViewName && (
+                <h5
+                    style={style.title}
+                    dangerouslySetInnerHTML={{
+                        __html: viewName,
+                    }}
+                />
+            )}
             <div style={viewScrollStyle}>
                 <View
                     data={viewData}
@@ -242,14 +249,16 @@ const jsonFilter = (data, trace) => {
     }, {});
 };
 
-const beautifyJson = (json) => {
-    return json
-        .replace(REG_QUOAT, '&quot;')
-        .replace(REG_LT, '&lt;')
-        .replace(REG_GT, '&gt;')
+const beautifyJson = (json) =>
+    stripTag(json)
         .replace(REG_KEY, callbackKey)
         .replace(REG_VALUE, callbackValue);
-};
+
+const stripTag = (str) =>
+    str
+        .replace(REG_QUOAT, '&quot;')
+        .replace(REG_LT, '&lt;')
+        .replace(REG_GT, '&gt;');
 
 const callbackKey = (str, before, key, after) => {
     return `${before}<span style="color:#9bdeb5;">${key}</span>${after}`;
@@ -284,19 +293,6 @@ onSelect
         events[event] = event;
         return events;
     }, {});
-
-export const VACList = (props) => (
-    <VAC useList="list" useEach="each" {...props} />
-);
-
-export const VACInput = (props) => (
-    <VAC
-        useValue="value"
-        useDefaultValue="defaultValue"
-        {...INPUT_EVENTS}
-        {...props}
-    />
-);
 
 const loop = (
     Item,
@@ -351,6 +347,7 @@ const style = {
         margin: '-3px 0',
         fontFamily: 'initial',
         fontSize: `${FONT_SIZE + 3}px`,
+        textAlign: 'left',
         color: TITLE_COLOR,
     },
     scroll: {
@@ -428,4 +425,29 @@ const style = {
     },
 };
 
-export default VAC;
+const withPreset = (presetName, presetProps) => {
+    const namePrefix = presetName
+        ? `<span style="color:#ff745c;">${presetName}</span>`
+        : '';
+    return (props) =>
+        VAC({
+            ...presetProps,
+            ...props,
+            name: `${namePrefix}${
+                namePrefix && props.name ? ' | ' : ''
+            }${stripTag(props.name)}`,
+        });
+};
+
+const VACList = withPreset('@List', {
+    useList: 'list',
+    useEach: 'each',
+});
+
+const VACInput = withPreset('@Input', {
+    useValue: 'value',
+    useDefaultValue: 'defaultValue',
+    ...INPUT_EVENTS,
+});
+
+export { withPreset, VAC, VACList, VACInput, VAC as default };

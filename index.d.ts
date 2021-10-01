@@ -18,7 +18,9 @@ export interface VACProps {
 
 declare const VAC: React.FC<VACProps>;
 
-export const VACList: React.FC<VACProps>;
-export const VACInput: React.FC<VACProps>;
+export const withPreset: (presetName: string, presetProps?: VACProps) => VAC;
 
-export default VAC;
+export const VACList: VAC;
+export const VACInput: VAC;
+
+export { VAC, VAC as default };
