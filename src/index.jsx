@@ -107,7 +107,9 @@ const View = ({
     const validData = data !== null && dataType === 'object';
 
     const jsonData = validData ? jsonFilter(data, trace) : data;
-    const json = JSON.stringify(jsonData) || (data === '' ? '' : String(data));
+    const json = beautifyJson(
+        JSON.stringify(jsonData) || (data === '' ? '' : String(data))
+    );
 
     const checkCallback = ([name, callback]) =>
         typeof callback === 'function' && !callbackNames[name];
@@ -142,7 +144,7 @@ const View = ({
     const hasContents = showTextarea || showEvents || showJson;
     const showLine = useLine && hasContents;
 
-    const viewPrefix = prefix !== '' && `[${prefix}]: `;
+    const viewPrefix = prefix !== '' ? `[${prefix}]: ` : '';
 
     return (
         <div style={style.ui}>
@@ -161,10 +163,12 @@ const View = ({
                 <p style={style.buttons}>{loop(Btn, callbacks, eachBtn)}</p>
             )}
             {showJson && (
-                <p style={style.json}>
-                    {viewPrefix}
-                    {json}
-                </p>
+                <p
+                    style={style.json}
+                    dangerouslySetInnerHTML={{
+                        __html: `${viewPrefix}${json}`,
+                    }}
+                />
             )}
         </div>
     );
@@ -238,9 +242,32 @@ const jsonFilter = (data, trace) => {
     }, {});
 };
 
+const beautifyJson = (json) => {
+    return json
+        .replace(REG_QUOAT, '&quot;')
+        .replace(REG_LT, '&lt;')
+        .replace(REG_GT, '&gt;')
+        .replace(REG_KEY, callbackKey)
+        .replace(REG_VALUE, callbackValue);
+};
+
+const callbackKey = (str, before, key, after) => {
+    return `${before}<span style="color:#9bdeb5;">${key}</span>${after}`;
+};
+
+const callbackValue = (str, before, value) => {
+    const color = value.charAt(0) === '"' ? '#ffb061' : '#b598d6';
+    return `${before}<span style="color:${color};">${value}</span>`;
+};
+
 const EMPTY_DATA = {};
 const EMPTY_ARRAY = [];
 const EMPTY_FNC = (data) => data;
+const REG_QUOAT = /\\"/g;
+const REG_LT = /</g;
+const REG_GT = />/g;
+const REG_KEY = /([{,]\s*)("[^"]+")(\s*:)/g;
+const REG_VALUE = /(<\/span>\s*:\s*)((?:"[^"]*")|(?:[^{[,}]*))/g;
 const REG_SPLIT = /[\s,]+/;
 const INPUT_EVENTS = `
 onKeyDown
