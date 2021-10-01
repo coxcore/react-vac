@@ -293,12 +293,13 @@ const loop = (
 };
 
 // dummy styles
-const TITLE_COLOR = '#fffdba';
-const BORDER_COLOR = '#354f63';
+const TITLE_COLOR = '#ede080';
+const BORDER_COLOR = '#00111f';
+const LINE_COLOR = '#354f63';
 const BG_COLOR = '#0c2233';
 const BTN_BG_COLOR = '#4ebded';
 const BTN_ACTIVE = '#0074a6';
-const JSON_COLOR = '#ffc478';
+const JSON_COLOR = '#aaa';
 const JSON_BG_COLOR = '#05070d';
 const FONT_SIZE = 14;
 
@@ -344,7 +345,7 @@ const style = {
         width: '99%',
         height: '1px',
         border: 'none',
-        backgroundColor: BORDER_COLOR,
+        backgroundColor: LINE_COLOR,
     },
     textarea: {
         display: 'block',
@@ -353,7 +354,7 @@ const style = {
         width: '99.3%',
         boxSizing: 'border-box',
         borderRadius: '4px',
-        border: `1px solid ${BORDER_COLOR}`,
+        border: `1px solid ${LINE_COLOR}`,
         outline: 'none',
         color: '#444',
         backgroundColor: '#eee',
