@@ -5,7 +5,7 @@
   - [data](#data)
   - [hidden](#hidden)
   - [trace](#trace)
-  - [listTrace](#listTrace)
+  - [listTrace](#listtrace)
   - [maxWidth, maxHeight](#maxwidth-maxheight)
   - [useList](#uselist)
   - [useEach](#useeach)
@@ -15,6 +15,8 @@
 - [Components](#components)
   - [VACList](#vaclist)
   - [VACInput](#vacinput)
+- [Functions](#functions)
+  - [withPreset](#withpreset)
 
 ## Props
 
@@ -31,10 +33,10 @@ Prop names follow the rules below.
 set `VAC Debugger` name.
 
 ```jsx
-<VAC name={Sample} />
+<VAC name={"Sample"} />
 ```
 
-![props_name1_s1](./assets/img/props_vac_name1_s1.png?raw=true)
+![props_name1_s1](./assets/img/props_vac_name1_s2.png?raw=true)
 
 If `VAC Debugger` has other properties and `name` is omitted, `name area` is not exposed.
 
@@ -42,7 +44,7 @@ If `VAC Debugger` has other properties and `name` is omitted, `name area` is not
 <VAC data={"no name was entered"} />
 ```
 
-![props_name2_s1](./assets/img/props_vac_name2_s1.png?raw=true)
+![props_name2_s1](./assets/img/props_vac_name2_s2.png?raw=true)
 
 ### data
 
@@ -54,7 +56,7 @@ If `VAC Debugger` has other properties and `name` is omitted, `name area` is not
 <VAC name="Props: data" data={{ value: "test value" }} />
 ```
 
-![props_data1_s1](./assets/img/props_vac_data1_s1.png?raw=true)
+![props_data1_s1](./assets/img/props_vac_data1_s2.png?raw=true)
 
 If props has callback functions, each button that calls the callback function is created.
 
@@ -65,7 +67,7 @@ If props has callback functions, each button that calls the callback function is
 />
 ```
 
-![props_data2_s1](./assets/img/props_vac_data2_s1.png?raw=true)
+![props_data2_s1](./assets/img/props_vac_data2_s2.png?raw=true)
 
 ```jsx
 <VAC
@@ -77,7 +79,7 @@ If props has callback functions, each button that calls the callback function is
 />
 ```
 
-![props_data3_s1](./assets/img/props_vac_data3_s1.png?raw=true)
+![props_data3_s1](./assets/img/props_vac_data3_s2.png?raw=true)
 
 If the type of `data` is not object, it is output to log.
 
@@ -90,7 +92,7 @@ If the type of `data` is not object, it is output to log.
 <VAC data={() => console.log('function!')} />
 ```
 
-![props_data4_s1](./assets/img/props_vac_data4_s1.png?raw=true)
+![props_data4_s1](./assets/img/props_vac_data4_s2.png?raw=true)
 
 ### hidden
 
@@ -118,7 +120,7 @@ props to show in `props area`. If there is more than one prop, separate them wit
 />
 ```
 
-![props_trace1_s1](./assets/img/props_vac_trace1_s1.png?raw=true)
+![props_trace1_s1](./assets/img/props_vac_trace1_s2.png?raw=true)
 
 ### listTrace
 
@@ -147,7 +149,7 @@ item props of list to show in `list area`. If there is more than one prop, separ
 />
 ```
 
-![props_trace1_s1](./assets/img/props_vac_trace2_s1.png?raw=true)
+![props_trace1_s1](./assets/img/props_vac_trace2_s2.png?raw=true)
 
 ### maxWidth, maxHeight
 
@@ -191,11 +193,11 @@ Property name of array to be displayed as `list area`. If `useList` is used, the
 />
 ```
 
-![props_list1_s1](./assets/img/props_vac_list1_s1.png?raw=true)
+![props_list1_s1](./assets/img/props_vac_list1_s2.png?raw=true)
 
 Without `useList`:
 
-![props_list2_s1](./assets/img/props_vac_list2_s1.png?raw=true)
+![props_list2_s1](./assets/img/props_vac_list2_s2.png?raw=true)
 
 > If property is function type, it is excluded from output.
 
@@ -228,7 +230,7 @@ Props other than the property used in the `useList` are displayed in `props area
 />
 ```
 
-![props_list3_s1](./assets/img/props_vac_list3_s1.png?raw=true)
+![props_list3_s1](./assets/img/props_vac_list3_s2.png?raw=true)
 
 ### useEach
 
@@ -263,7 +265,7 @@ Property name of callback function that returns new props for each list item by 
 />
 ```
 
-![props_list4_s1](./assets/img/props_vac_list4_s1.png?raw=true)
+![props_list4_s1](./assets/img/props_vac_list4_s2.png?raw=true)
 
 `VAC Debugger` assumes `VAC` creates props of each item component in list using the callback specified in `useEach`.
 So the relevant processing must be implemented in `VAC`.
@@ -306,7 +308,7 @@ Property name to be used for `value` and `defaultValue` of textarea element. If 
 />
 ```
 
-![props_input1_s1](./assets/img/props_vac_input1_s1.png?raw=true)
+![props_input1_s1](./assets/img/props_vac_input1_s2.png?raw=true)
 
 > Do not use `useValue` and `useDefaultValue` together.
 
@@ -352,7 +354,7 @@ const InputUI = () => {
 };
 ```
 
-![props_input2_s1](./assets/img/props_vac_input2_s1.png?raw=true)
+![props_input2_s1](./assets/img/props_vac_input2_s2.png?raw=true)
 
 > `VAC` is a stateless component.
 
@@ -380,7 +382,7 @@ If target of the props is valid, `textarea` is exposed.
 />
 ```
 
-![props_input3_s1](./assets/img/props_vac_input3_s1.png?raw=true)
+![props_input3_s1](./assets/img/props_vac_input3_s2.png?raw=true)
 
 ### customEvent
 
@@ -405,7 +407,7 @@ Enter handler that virtually implements the function inside component.
 />
 ```
 
-![props_custom_s1](./assets/img/props_vac_custom_event1_s1.png?raw=true)
+![props_custom_s1](./assets/img/props_vac_custom_event1_s2.png?raw=true)
 
 How is it different from event?
 
@@ -430,7 +432,7 @@ List preset.
 - `useEach` : "each"
 
 ```jsx
-import VAC, { VACList } from "react-vac";
+import { VAC, VACList } from "react-vac";
 
 <VAC useList="list" useEach="each" />
 // same
@@ -452,7 +454,7 @@ Input preset.
 - `onKeyPress` : "onKeyPress"
 
 ```jsx
-import VAC, { VACInput } from "react-vac";
+import { VAC, VACInput } from "react-vac";
 
 <VAC
   useValue="value"
@@ -468,3 +470,44 @@ import VAC, { VACInput } from "react-vac";
 // same
 <VACInput />
 ```
+
+## Functions
+
+### withPreset
+
+> [type] (string, VACProps) => VAC, [version] ^1.2.0
+
+Returns a `VAC debugger` with preset `props`
+
+```js
+import { withPreset } from "react-vac";
+
+// withPreset("preset name", {preset props})
+const VACBasicList = withPreset("@BasicList", {
+  useList: "datas", // list prop name
+  useEach: "getProp", // each prop name
+  maxWith: 600, // max width
+});
+
+const BasicList = () => {
+  // preset vac
+  const vBasicListProps = {
+    datas: [{ title: "first title" }, { title: "second title" }],
+    getProps: (data, index) => ({ idx: index, value: title }),
+  };
+
+  return (
+    <>
+      <VACList name="VBasicList" data={vBasicListProps} />
+      {/*
+      <VAC name="VBasicList" data={vBasicListProps} useList="datas" useEach="getProp" />
+      */}
+    </>
+  );
+
+  // real component
+  // return <VBasicList {...vBasicListProps} />;
+};
+```
+
+> The default supported `VACList` and `VACInput` are also created in the same way.

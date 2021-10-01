@@ -18,31 +18,37 @@ or
 yarn add react-vac --dev
 ```
 
+## Demo
+
+- [TodoList VAC Debugger](https://coxcore.github.io/react-vac/demo/todo/vac/)
+
 ## Usage
 
 `VAC Debugger` analyzes `Props Object` and then constructs UI for debugging.
 
-![basic usage](./docs/readme_assets/example_vac_basic_s1.png?raw=true)
+![basic usage](./docs/readme_assets/example_vac_basic_s2.png?raw=true)
 
 ```jsx
-import VAC from "react-vac";
+import { VAC } from "react-vac";
 
-// props object of VAC
-const viewComponentProps = {
-  // properties
-  value: "test value",
-  someValue: { foo: "var" },
+const ExampleView = () => {
+  // props object of VAC
+  const viewComponentProps = {
+    // properties
+    value: "test value",
+    someValue: { foo: "var" },
 
-  // callbacks
-  onClick: (event) => console.log("click!"),
-  onSomeEvent: (event) => console.log("onSomeEvent!"),
+    // callbacks
+    onClick: (event) => console.log("click!"),
+    onSomeEvent: (event) => console.log("onSomeEvent!"),
+  };
+
+  // VAC Debugger
+  return <VAC name="Dummy View" data={viewComponentProps} />;
+
+  // real VAC
+  // return <ViewComponent {...viewComponentProps} />
 };
-
-// VAC Debugger
-<VAC name="Dummy View" data={viewComponentProps} />;
-
-// real VAC
-// <ViewComponent {...viewComponentProps} />
 ```
 
 > `VAC Debugger` also has functions related to input and list.
@@ -100,7 +106,7 @@ const SpinBoxUI = () => {
 };
 ```
 
-![basic example](./docs/readme_assets/example_vac_spinbox_s1.png?raw=true)
+![basic example](./docs/readme_assets/example_vac_spinbox_s2.png?raw=true)
 
 #### Step3
 
