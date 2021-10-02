@@ -500,7 +500,7 @@ const BasicList = () => {
     <>
       <VACList name="VBasicList" data={vBasicListProps} />
       {/*
-      <VAC name="VBasicList" data={vBasicListProps} useList="datas" useEach="getProp" />
+      <VAC name="VBasicList" data={vBasicListProps} useList="datas" useEach="getProp" maxWidth="600" />
       */}
     </>
   );
