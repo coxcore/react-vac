@@ -5,7 +5,7 @@ export interface VACProps {
     data?: any;
     trace?: string;
     listTrace?: string;
-    customEvent?: { [key: string]: Function };
+    customEvent?: { [key: string]: (...args: any[]) => void };
     hidden?: boolean;
     maxWidth?: number | string;
     maxHeight?: number | string;
@@ -16,11 +16,12 @@ export interface VACProps {
     [key: string]: string | any;
 }
 
-declare const VAC: React.FC<VACProps>;
+export type VAC = React.FC<VACProps>;
 
-export const withPreset: (presetName: string, presetProps?: VACProps) => VAC;
+export declare const withPreset: (type: string, hocProps?: VACProps) => VAC;
 
-export const VACList: VAC;
-export const VACInput: VAC;
+export declare const VAC: VAC;
+export declare const VACList: VAC;
+export declare const VACInput: VAC;
 
-export { VAC, VAC as default };
+export default VAC;
