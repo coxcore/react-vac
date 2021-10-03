@@ -1,4 +1,4 @@
-# VAC Usage
+# VAC Debugger Usage
 
 - [Props](#props)
   - [name](#name)
@@ -22,9 +22,9 @@
 
 Prop names follow the rules below.
 
-- `use~`: Props to use for list elements or input elements in `VAC`
-- `on~`: Event callback to use for input elements in `VAC`
-- etc: Props for `VAC`
+- `use~`: Props to use for list elements or input elements in `VAC Debugger`
+- `on~`: Event callback to use for input elements in `VAC Debugger`
+- etc: Props for `VAC Debugger`
 
 ### name
 
@@ -477,7 +477,7 @@ import { VAC, VACInput } from "react-vac";
 
 > [type] (string, VACProps) => VAC, [version] ^1.2.0
 
-Returns a `VAC debugger` with preset `props`
+Returns a `VAC debugger` with preset `props`.
 
 ```js
 import { withPreset } from "react-vac";
@@ -491,22 +491,22 @@ const VACBasicList = withPreset("@BasicList", {
 
 const BasicList = () => {
   // preset vac
-  const vBasicListProps = {
+  const listViewProps = {
     datas: [{ title: "first title" }, { title: "second title" }],
     getProps: (data, index) => ({ idx: index, value: title }),
   };
 
   return (
     <>
-      <VACList name="VBasicList" data={vBasicListProps} />
+      <VACBasicList name="ListView" data={listViewProps} />
       {/*
-      <VAC name="VBasicList" data={vBasicListProps} useList="datas" useEach="getProp" maxWidth="600" />
+      <VAC name="ListView" data={listViewProps} useList="datas" useEach="getProp" maxWidth="600" />
       */}
     </>
   );
 
   // real component
-  // return <VBasicList {...vBasicListProps} />;
+  // return <ListView {...listViewProps} />;
 };
 ```
 

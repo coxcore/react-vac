@@ -20,11 +20,13 @@ yarn add react-vac --dev
 
 ## Demo
 
-- [TodoList VAC Debugger](https://coxcore.github.io/react-vac/demo/todo/vac/)
+[Todo List developed using VAC Debugger](https://coxcore.github.io/react-vac/demo/todo/vac/)
 
 ## Usage
 
 `VAC Debugger` analyzes `Props Object` and then constructs UI for debugging.
+
+See [VAC Debugger Usage](./docs/VAC_USAGE.md) for more details.
 
 ![basic usage](./docs/readme_assets/example_vac_basic_s2.png?raw=true)
 
@@ -50,10 +52,6 @@ const ExampleView = () => {
   // return <ViewComponent {...viewComponentProps} />
 };
 ```
-
-> `VAC Debugger` also has functions related to input and list.
->
-> [Learn More >](./docs/VAC_USAGE.md)
 
 ## Development Process (for View Asset Component)
 
@@ -148,6 +146,12 @@ const SpinBoxUI = () => {
   //return <VAC name="SpinBoxView" data={spinBoxViewProps} />;
 };
 ```
+
+## Examples
+
+- [VAC](https://github.com/coxcore/examples-react-ts/blob/todo-list/src/components/TodoContainer.tsx#L31)
+- [VACInput](https://github.com/coxcore/examples-react-ts/blob/todo-list/src/components/TodoInput.tsx#L34)
+- [VACList](https://github.com/coxcore/examples-react-ts/blob/todo-list/src/components/TodoList.tsx#L39)
 
 ## License
 
