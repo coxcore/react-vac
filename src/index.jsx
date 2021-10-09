@@ -114,7 +114,7 @@ const View = ({
     const validData = data !== null && dataType === 'object';
 
     const jsonData = validData ? jsonFilter(data, trace) : data;
-    const json = beautifyJson(
+    const json = highlightJson(
         JSON.stringify(jsonData) || (data === '' ? '' : String(data))
     );
 
@@ -255,11 +255,17 @@ const jsonFilter = (data, trace) => {
     }, {});
 };
 
-const beautifyJson = (json) =>
+const highlightJson = (json) =>
     stripTag(json)
         .replace(REG_KEY, callbackKey)
         .replace(REG_VALUE, callbackValue)
         .replace(REG_ARRAY, callbackValue);
+
+const stripSpecialChar = (str) =>
+    str
+        .replace(REG_COMMA, '&#44;')
+        .replace(REG_BRACKET, '&#91;')
+        .replace(REG_BRACE, '&#123;');
 
 const stripTag = (str) =>
     str
@@ -272,19 +278,25 @@ const callbackKey = (str, before, key, after) => {
 };
 
 const callbackValue = (str, before, value) => {
-    const color = value.charAt(0) === '"' ? '#ffb061' : '#b598d6';
-    return `${before}<span style="color:${color};">${value}</span>`;
+    const isString = value.charAt(0) === '"';
+    const color = isString ? '#ffb061' : '#b598d6';
+    const result = isString ? stripSpecialChar(value) : value;
+
+    return `${before}<span style="color:${color};">${result}</span>`;
 };
 
 const EMPTY_DATA = {};
 const EMPTY_ARRAY = [];
 const EMPTY_FNC = (data) => data;
 const REG_QUOAT = /\\"/g;
+const REG_COMMA = /,/g;
+const REG_BRACE = /{/g;
+const REG_BRACKET = /\[/g;
 const REG_LT = /</g;
 const REG_GT = />/g;
 const REG_KEY = /([{,]\s*)("[^"]+")(\s*:)/g;
 const REG_VALUE = /(<\/span>\s*:\s*)("[^"]*"|[^{[,}]*)/g;
-const REG_ARRAY = /([[,])("[^"]*"|[^",]+)(?=[,\]])/g;
+const REG_ARRAY = /([[,])("[^"]*"|[^",\]}]+)(?=[,\]}])/g;
 const REG_SPLIT = /[\s,]+/;
 const INPUT_EVENTS = `
 onKeyDown
