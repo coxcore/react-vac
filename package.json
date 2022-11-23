@@ -1,6 +1,6 @@
 {
   "name": "react-vac",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "This component is a debugging tool that helps you develop components without View(JSX).",
   "author": "Park U-yeong <ascript0@gmail.com>",
   "license": "MIT",
@@ -24,8 +24,8 @@
     "deploy": "gh-pages -d example/build"
   },
   "peerDependencies": {
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react": ">=16.0.0",
+    "react-dom": ">=16.0.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.31.1",
