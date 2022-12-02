@@ -351,6 +351,16 @@ const App = () => {
                 }}
             />
 
+            {/* Size */}
+            <VAC
+                name="Props: Input"
+                useValue="value"
+                maxWidth="300"
+                data={{
+                    value: 'test value',
+                }}
+            />
+
             <Component />
             <List />
             <Input />

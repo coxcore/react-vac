@@ -357,6 +357,7 @@ const FONT_SIZE = 14;
 const style = {
     container: {
         display: 'block',
+        width: '100%',
         padding: '10px 8px 8px',
         margin: '3px 0px',
         borderRadius: '7px',
