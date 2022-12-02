@@ -75,7 +75,7 @@ const VAC = ({
         : null;
 
     return (
-        <div style={viewContainerStyle}>
+        <div className="vac-debugger" style={viewContainerStyle}>
             {validViewName && (
                 <h5
                     style={style.title}
