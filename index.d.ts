@@ -9,6 +9,7 @@ export interface VACProps {
     hidden?: boolean;
     maxWidth?: number | string;
     maxHeight?: number | string;
+    useName?: string;
     useValue?: string;
     useDefaultValue?: string;
     useList?: string;

@@ -9,6 +9,7 @@
   - [maxWidth, maxHeight](#maxwidth-maxheight)
   - [useList](#uselist)
   - [useEach](#useeach)
+  - [useName](#usename)
   - [useValue, useDefaultValue](#usevalue-usedefaultvalue)
   - [on~ (Property prefixed with `on`)](#on-property-prefixed-with-on)
   - [customEvent](#customevent)
@@ -30,7 +31,7 @@ Prop names follow the rules below.
 
 > [type] string
 
-set `VAC Debugger` name.
+Set `VAC Debugger` name.
 
 ```jsx
 <VAC name={"Sample"} />
@@ -41,7 +42,7 @@ set `VAC Debugger` name.
 If `VAC Debugger` has other properties and `name` is omitted, `name area` is not exposed.
 
 ```jsx
-<VAC data={"no name was entered"} />
+<VAC data={"No name was entered"} />
 ```
 
 ![props_name2_s1](./assets/img/props_vac_name2_s2.png?raw=true)
@@ -110,7 +111,7 @@ Prevent rendering.
 
 > [type] string, [version] ^0.1.0
 
-props to show in `props area`. If there is more than one prop, separate them with commas or spaces.
+Props to show in `props area`. If there is more than one prop, separate them with commas or spaces.
 
 ```jsx
 <VAC
@@ -126,7 +127,7 @@ props to show in `props area`. If there is more than one prop, separate them wit
 
 > [type] string, [version] ^0.1.0
 
-item props of list to show in `list area`. If there is more than one prop, separate them with commas or spaces.
+Item props of list to show in `list area`. If there is more than one prop, separate them with commas or spaces.
 
 ```jsx
 <VAC
@@ -135,11 +136,11 @@ item props of list to show in `list area`. If there is more than one prop, separ
   trace="propB"
   listTrace="propA, propC"
   data={{
-    // list props
+    // List props
     propA: "test value",
     propB: 12345,
     propC: true,
-    // list item props
+    // List item props
     list: [
       { propA: "test value", propB: 12345, propC: true },
       { propA: "test value", propB: 12345, propC: true },
@@ -208,10 +209,10 @@ Props other than the property used in the `useList` are displayed in `props area
   name="Props: List"
   useList="exampleList"
   data={{
-    // list component props
+    // List component props
     value: "list component value",
     onRefresh: () => console.log("refresh list"),
-    // list
+    // List
     exampleList: [
       {
         value: "test value 1",
@@ -249,7 +250,7 @@ Property name of callback function that returns new props for each list item by 
       label: data.value,
       onCheck: (event) => console.log("check", index, data),
     }),
-    // raw list
+    // Raw list
     exampleList: [
       {
         value: "test value 1",
@@ -292,6 +293,26 @@ const ViewComponent = ({ list, each }) => (
 
 > Use [`react-loop-item`](https://www.npmjs.com/package/react-loop-item#each-optional) to help develop this feature in `VAC`.
 
+### useName
+
+> [type] string, [version] ^0.3.0
+
+Set the 'name' property of the form element(textarea, buttons).
+
+```jsx
+<VAC
+  useName="key"
+  onChange="onChange"
+  data={{
+    key: "testInput",
+    onChange: (event) => {
+      // Output: testInput - {event.target.value}
+      console.log(event.target.name, "-", event.target.value);
+    },
+  }}
+/>
+```
+
 ### useValue, useDefaultValue
 
 > [type] string
@@ -330,10 +351,10 @@ How to access `textarea` value :
 
 ```jsx
 const InputUI = () => {
-  // value state
+  // Value state
   const [value, setValue] = useState("default value");
 
-  // view(VAC) component props object
+  // View(VAC) component props object
   const propsObject = {
     value,
     onChange: (event) => setValue(event.target.value),
@@ -348,7 +369,7 @@ const InputUI = () => {
       onChange="onChange"
       data={propsObject}
     />
-    // real VAC
+    // Real VAC
     // <InputVAC {...propsObject} />
   );
 };
@@ -372,10 +393,10 @@ If target of the props is valid, `textarea` is exposed.
   onChange="onChange"
   onKeyUp="onKeyUp"
   data={{
-    // used as props of textarea
+    // Used as props of textarea
     onChange: (event) => console.log("change!"),
     onKeyUp: (event) => console.log("key up!"),
-    // not used as props of textarea
+    // Not used as props of textarea
     onKeyDown: (event) => console.log("key down!"),
     onSend: (event) => console.log("send!"),
   }}
@@ -394,7 +415,7 @@ Enter handler that virtually implements the function inside component.
 <VAC
   name="Props: Custom Event"
   customEvent={{
-    // handler called when 'increase' button is clicked.
+    // Handler called when 'increase' button is clicked.
     // callback: data.increase.
     // data: data property of VAC Debugger
     increase: (event, callback, data) => callback(data.value + 1),
@@ -412,11 +433,11 @@ Enter handler that virtually implements the function inside component.
 How is it different from event?
 
 ```jsx
-// real component
-// event
+// Real component
+// Event
 <button onClick={onDecrease}>event</button>
 
-// customEvent
+// CustomEvent
 <button onClick={(event) => increase(value + 1)}>event</button>
 ```
 
@@ -435,7 +456,7 @@ List preset.
 import { VAC, VACList } from "react-vac";
 
 <VAC useList="list" useEach="each" />
-// same
+// Same
 <VACList />
 ```
 
@@ -443,6 +464,7 @@ import { VAC, VACList } from "react-vac";
 
 Input preset.
 
+- `useName` : "name"
 - `useValue` : "value"
 - `useDefaultValue` : "defaultValue"
 - `onChange` : "onChange"
@@ -457,6 +479,7 @@ Input preset.
 import { VAC, VACInput } from "react-vac";
 
 <VAC
+  useName="name"
   useValue="value"
   useDefaultValue="defaultValue"
   onChange="onChange"
@@ -467,7 +490,7 @@ import { VAC, VACInput } from "react-vac";
   onKeyUp="onKeyUp"
   onKeyPress="onKeyPress"
 />
-// same
+// Same
 <VACInput />
 ```
 
@@ -484,13 +507,13 @@ import { withPreset } from "react-vac";
 
 // withPreset("preset name", {preset props})
 const VACBasicList = withPreset("@BasicList", {
-  useList: "datas", // list prop name
-  useEach: "getProp", // each prop name
-  maxWith: 600, // max width
+  useList: "datas", // List prop name
+  useEach: "getProp", // Each prop name
+  maxWith: 600, // Max width
 });
 
 const BasicList = () => {
-  // preset vac
+  // Preset vac
   const listViewProps = {
     datas: [{ title: "first title" }, { title: "second title" }],
     getProps: (data, index) => ({ idx: index, value: title }),
@@ -505,7 +528,7 @@ const BasicList = () => {
     </>
   );
 
-  // real component
+  // Real component
   // return <ListView {...listViewProps} />;
 };
 ```
