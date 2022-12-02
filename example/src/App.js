@@ -113,11 +113,19 @@ const Input = () => {
         onChange: (event) => {
             const value = event.currentTarget.value;
             setValue(value);
+            console.log(event.currentTarget.name, value);
         },
-        onSubmit: (event) => console.log('submit :', value),
+        onSubmit: (event) =>
+            console.log(event.currentTarget.name, 'submit :', value),
     };
 
-    return <VACInput name="Dummy Input" data={inputComponentProps} />;
+    return (
+        <VACInput
+            name="Dummy Input / useName"
+            data={inputComponentProps}
+            useName="user"
+        />
+    );
 };
 
 const SpinBox = () => {

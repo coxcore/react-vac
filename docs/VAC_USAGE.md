@@ -9,6 +9,7 @@
   - [maxWidth, maxHeight](#maxwidth-maxheight)
   - [useList](#uselist)
   - [useEach](#useeach)
+  - [useName](#usename)
   - [useValue, useDefaultValue](#usevalue-usedefaultvalue)
   - [on~ (Property prefixed with `on`)](#on-property-prefixed-with-on)
   - [customEvent](#customevent)
@@ -292,6 +293,26 @@ const ViewComponent = ({ list, each }) => (
 
 > Use [`react-loop-item`](https://www.npmjs.com/package/react-loop-item#each-optional) to help develop this feature in `VAC`.
 
+### useName
+
+> [type] string, [version] ^0.3.0
+
+Set the 'name' property of the form element(textarea, buttons).
+
+```jsx
+<VAC
+  useName="key"
+  onChange="onChange"
+  data={{
+    key: "testInput",
+    onChange: (event) => {
+      // Output: testInput - {event.target.value}
+      console.log(event.target.name, "-", event.target.value);
+    },
+  }}
+/>
+```
+
 ### useValue, useDefaultValue
 
 > [type] string
@@ -443,6 +464,7 @@ import { VAC, VACList } from "react-vac";
 
 Input preset.
 
+- `useName` : "name"
 - `useValue` : "value"
 - `useDefaultValue` : "defaultValue"
 - `onChange` : "onChange"
@@ -457,6 +479,7 @@ Input preset.
 import { VAC, VACInput } from "react-vac";
 
 <VAC
+  useName="name"
   useValue="value"
   useDefaultValue="defaultValue"
   onChange="onChange"

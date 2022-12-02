@@ -11,6 +11,7 @@ const VAC = ({
     hidden = false,
     maxWidth = null,
     maxHeight = null,
+    useName = null,
     useValue = null,
     useDefaultValue = null,
     useList = null,
@@ -31,6 +32,8 @@ const VAC = ({
         [useDefaultValue]: propDefaultValue,
         ...propsData
     } = validData ? data : EMPTY_DATA;
+
+    const propName = propsData[useName];
 
     const targetList = dataIsArray ? data : propList;
 
@@ -83,6 +86,7 @@ const VAC = ({
             )}
             <div style={viewScrollStyle}>
                 <View
+                    name={propName}
                     data={viewData}
                     trace={viewTrace}
                     customEvent={customEvent}
@@ -100,6 +104,7 @@ const VAC = ({
 };
 
 const View = ({
+    name,
     data,
     trace,
     value,
@@ -118,17 +123,17 @@ const View = ({
         JSON.stringify(jsonData) || (data === '' ? '' : String(data))
     );
 
-    const checkCallback = ([name, callback]) =>
-        typeof callback === 'function' && !callbackNames[name];
+    const checkCallback = ([key, callback]) =>
+        typeof callback === 'function' && !callbackNames[key];
 
-    const setCustomEvent = ([name, callback]) => {
-        const handler = customEvent[name];
+    const setCustomEvent = ([key, callback]) => {
+        const handler = customEvent[key];
         const fnc =
             typeof handler === 'function'
                 ? (event) => handler(event, callback, data)
                 : callback;
 
-        return [name, fnc];
+        return [key, fnc, name];
     };
 
     const callbacks =
@@ -158,6 +163,7 @@ const View = ({
             {showLine && <hr style={style.hr} />}
             {showTextarea && (
                 <textarea
+                    name={name}
                     style={style.textarea}
                     value={value}
                     defaultValue={defaultValue}
@@ -187,9 +193,10 @@ const View = ({
     );
 };
 
-const Btn = ({ label, onClick }) => (
+const Btn = ({ label, onClick, name }) => (
     <button
         style={style.button}
+        name={name}
         onClick={onClick}
         onMouseDown={onActiveBtn}
         onTouchStart={onActiveBtn}
@@ -206,9 +213,10 @@ const onActiveBtn = (event) =>
 const onInactiveBtn = (event) =>
     (event.target.style.backgroundColor = BTN_BG_COLOR);
 
-const eachBtn = ([label, onClick]) => ({
+const eachBtn = ([label, onClick, name]) => ({
     label,
     onClick,
+    name,
 });
 
 const getEachView = (each, trace) => (itemData, index) => ({
@@ -466,6 +474,7 @@ const VACList = withPreset('@List', {
 });
 
 const VACInput = withPreset('@Input', {
+    useName: 'name',
     useValue: 'value',
     useDefaultValue: 'defaultValue',
     ...INPUT_EVENTS,
