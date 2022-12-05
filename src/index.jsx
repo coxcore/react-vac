@@ -203,6 +203,7 @@ const Btn = ({ label, onClick, name }) => (
     <button
         style={style.button}
         name={name}
+        value={label}
         onClick={onClick}
         onMouseDown={onActiveBtn}
         onTouchStart={onActiveBtn}
