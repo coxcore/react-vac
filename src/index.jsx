@@ -465,7 +465,7 @@ const withPreset = (presetName, presetProps) => {
             ...props,
             name: `${namePrefix}${
                 namePrefix && props.name ? ' | ' : ''
-            }${stripTag(props.name)}`,
+            }${stripTag(props.name || '')}`,
         });
 };
 
