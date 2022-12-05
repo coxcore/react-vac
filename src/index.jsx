@@ -11,6 +11,7 @@ const VAC = ({
     hidden = false,
     maxWidth = null,
     maxHeight = null,
+    formName = null,
     useName = null,
     useValue = null,
     useDefaultValue = null,
@@ -33,7 +34,7 @@ const VAC = ({
         ...propsData
     } = validData ? data : EMPTY_DATA;
 
-    const propName = propsData[useName];
+    const propName = propsData[useName] || formName;
 
     const targetList = dataIsArray ? data : propList;
 
@@ -161,6 +162,11 @@ const View = ({
     return (
         <div style={style.ui}>
             {showLine && <hr style={style.hr} />}
+            {showTextarea && name && (
+                <p style={style.nameArea}>
+                    <span style={style.name}>{name}</span>
+                </p>
+            )}
             {showTextarea && (
                 <textarea
                     name={name}
@@ -452,6 +458,19 @@ const style = {
         textAlign: 'left',
         wordBreak: 'break-all',
         cursor: 'pointer',
+    },
+    nameArea: {
+        padding: '4px 0',
+        margin: '1px 0 1px 2px',
+        textAlign: 'left',
+        fontWeight: 'bold',
+        color: '#bbb',
+        fontSize: `${FONT_SIZE + 2}px`,
+    },
+    name: {
+        padding: '5px 6px 3px',
+        borderRadius: '4px',
+        backgroundColor: 'rgba(255,255,255,0.1)',
     },
 };
 
